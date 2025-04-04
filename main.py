@@ -1,3 +1,4 @@
+"""The main class for the project """
 import datetime
 import uuid
 
@@ -78,9 +79,14 @@ class BankAccount:
         })
 
 
-kupa = BankAccount("Nicholas Chamboko", 5000)
-print(kupa.deposit(150))
-print(kupa.withdraw(2050))
-print(kupa.get_balance())
-print(kupa.display_info())
-print(kupa.view_transactions())
+def main():
+    kupa = BankAccount("Nicholas Chamboko", 5000)
+    print(kupa.deposit(150))
+    print(kupa.withdraw(2050))
+    print(kupa.get_balance())
+    print(kupa.display_info())
+    print(kupa.view_transactions())
+
+
+if __name__ == "__main__":
+    main()
