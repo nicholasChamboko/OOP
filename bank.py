@@ -5,6 +5,8 @@ from checking import CheckingAccount
 
 
 class Bank:
+    """Handling all banking functions"""
+
     def __init__(self, name):
         self.name = name
         self.accounts = {}
@@ -23,6 +25,7 @@ class Bank:
             "phone": phone,
             "accounts": []
         }
+
         self.customers[customer_id] = customer
         return customer_id
 
@@ -51,11 +54,14 @@ class Bank:
         self.accounts[account.account_number] = account
         customer["accounts"].append(account.account_number)
 
+        return account.account_number
+
     def get_account(self, account_number):
         """Get an account by its number"""
 
         if account_number not in self.accounts:
             raise ValueError("Account not found")
+
         return self.accounts[account_number]
 
     def get_customer_accounts(self, customer_id):
@@ -70,12 +76,13 @@ class Bank:
         """Transfer money between accounts."""
         if amount <= 0:
             raise ValueError("Transfer amount must be positive")
+
         from_account = self.get_account(from_account_number)
         to_account = self.get_account(to_account_number)
 
         # Use withdrawal method which checks sufficient funds
         from_account.withdraw(amount)
-        to_account.self.get_account(to_account)
+        to_account.deposit(amount)
 
         # Add special transaction records
         from_account._add_transaction(
@@ -83,27 +90,50 @@ class Bank:
         to_account._add_transaction(
             f"Transfer from {from_account_number}", amount)
 
-        return f"Transferred R{amount:.2f} {from_account_number} to {to_account}"
+        return f"Transferred R{amount:.2f} from {from_account_number} to {to_account_number}"
 
 
-if __name__ == "__main__":
+def main():
+    """Function to start the banking application."""
+
     # Create a bank
-
     my_bank = Bank("Python Banking System")
 
     # Create customers
-    john_id = my_bank.create_customer(
+    nick_id = my_bank.create_customer(
         "Nicholas", "3 Middlebult Street", "0815844044")
     mary_id = my_bank.create_customer(
-        "Mary Johnson", "21 Wolmerans Street", "0810002515")
+        "Mary Josephs", "21 Wolmerans Street", "0810002515")
 
     # Create accounts for customers
-    john_checking = my_bank.create_account(
-        "checking", john_id, 1000, overdraft_limit=200)
-    john_savings = my_bank.create_account(
-        "savings", john_id, 5000, interest_rate=0.02)
+    nick_checking = my_bank.create_account(
+        "checking", nick_id, 1000, overdraft_limit=200)
+    nick_savings = my_bank.create_account(
+        "savings", nick_id, 5000, interest_rate=0.02)
     mary_checking = my_bank.create_account("checking", mary_id, 2000)
 
     # Perform some transactions
-    checking_account = my_bank.get_account(john_checking)
-    savings_account = my_bank.get_account(john_savings)
+    checking_account = my_bank.get_account(nick_checking)
+    savings_account = my_bank.get_account(nick_savings)
+
+    print(checking_account.display_info())
+    print("\n" + savings_account.display_info())
+
+    print("\nDepositing R500 to checking...")
+    print(checking_account.deposit(500))
+
+    print("\nWithdrawing R200 from savings...")
+    print(savings_account.withdraw(200))
+
+    print("\nTransferring R400 from checking to savings...")
+    print(my_bank.transfer(nick_checking, nick_savings, 750))
+
+    print("\nChecking account transaction history:")
+    print(checking_account.view_transactions())
+
+    print("\nSavings account transaction history:")
+    print(savings_account.view_transactions())
+
+
+if __name__ == "__main__":
+    main()

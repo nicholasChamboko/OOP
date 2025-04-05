@@ -26,7 +26,7 @@ class BankAccount:
 
         self._balance += amount
         self._add_transaction("Deposit", amount)
-        return f"Deposited R{amount:.2f}. New balance: R{self._balance:.2f}"
+        return f"Deposited R{amount:.2f}.\nNew balance: R{self._balance:.2f}"
 
     def withdraw(self, amount):
         """Withdraw amount"""
@@ -38,7 +38,7 @@ class BankAccount:
 
         self._balance -= amount
         self._add_transaction("Withdrawal:", -amount)
-        return f"Withdrew R{amount:.2f}. New balance is R{self._balance:.2f}"
+        return f"Withdrew R{amount:.2f}.\nNew balance is R{self._balance:.2f}"
 
     def get_balance(self):
         """Get Current balance"""
