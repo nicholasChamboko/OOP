@@ -32,5 +32,9 @@ class SavingsAccount(BankAccount):
         )
 
 
-nick = SavingsAccount('Kupa Chamboko', 25235)
-print(nick.display_info())
+def main():
+    pass
+
+
+if __name__ == "__main__":
+    main()

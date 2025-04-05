@@ -40,6 +40,9 @@ class CheckingAccount(BankAccount):
         )
 
 
-km = CheckingAccount("Kupakwashe", 25000)
+def main():
+    pass
 
-print(km.display_info())
+
+if __name__ == "__main__":
+    main()
